@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+    wordpress:
+        image: wordpress:5.4.0-php7.4-apache
+        env_file: ".env"
+        depends_on: db
+        ports:
+            - "80:80"
+            - "443:443"
+    db:
+        command: --default-authentication-plugin=mysql_native_password
+        env_file: ".env"
+        image: mysql:8.0
+        ports:
+            - "3306:3306"
+        volumes:
+            - .docker/db/storage:/var/lib/mysql:cached
